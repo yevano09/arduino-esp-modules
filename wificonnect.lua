@@ -1,6 +1,6 @@
 station_cfg={}
-station_cfg.ssid="Phoenix"
-station_cfg.pwd="g0d!$g0d"
+station_cfg.ssid="phoenix3"
+station_cfg.pwd="9845547578"
 station_cfg.save=true
 
 

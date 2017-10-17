@@ -27,20 +27,22 @@
 -- ###############################################################
 dofile("gpiosetreset.lua");
 
-sensorID = "security_001"    -- a sensor identifier for this device
+sensorID = "Room1_Switch_002"    -- a sensor identifier for this device
 tgtHost = "m11.cloudmqtt.com" -- target host (broker)
 tgtPort = 12492          -- target port (broker listening on)
 mqttUserID = "lyhdpqlj"     -- account to use to log into the broker
 mqttPass = "4OCSTRT0DPlQ"     -- broker account password
 mqttTimeOut = 120       -- connection timeout
 dataInt = 1         -- data transmission interval in seconds
-topicQueue = "/security"    -- the MQTT topic queue to use
+topicQueue = "/Light"    -- the MQTT topic queue to use
 
 --tgtHost = "holybuddhasep17.ddns.net" -- target host (broker)
 --tgtPort = 1883          -- target port (broker listening on)
 --mqttUserID = ""     -- account to use to log into the broker
 --mqttPass = ""     -- broker account password
-setLow()
+fdata = "0"
+fdata=getFileData()
+setState(tonumber(fdata))
 
 
 -- You shouldn't need to change anything below this line. -Phil --
@@ -100,7 +102,9 @@ function makeConn()
     -- Instantiate a global MQTT client object
     print("Instantiating mqttBroker")
     mqttBroker = mqtt.Client(sensorID, mqttTimeOut, mqttUserID, mqttPass, 1)
-
+    fdata = getFileData()
+    print("data recieved ".. fdata)
+    setState(tonumber(fdata) )
     -- Set up the event callbacks
     print("Setting up callbacks")
     mqttBroker:on("connect", function(client) print ("connected") end)
@@ -111,7 +115,7 @@ function makeConn()
             print(topic .. ": " .. data)
 
             if(topic ==  topicQueue ) then
-                if( data == "high" ) then
+                if( string.lower(data) == "high" ) then
                     setHigh()
                 else 
                     setLow()
