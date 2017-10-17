@@ -1,6 +1,6 @@
 station_cfg={}
-station_cfg.ssid="phoenix3"
-station_cfg.pwd="9845547578"
+station_cfg.ssid="wifi_id"
+station_cfg.pwd="wifi_pwd"
 station_cfg.save=true
 
 
